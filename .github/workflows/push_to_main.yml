@@ -3,7 +3,7 @@ name: push_to_main
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   terraform_apply:
