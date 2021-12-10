@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2.4.0
 
       - name: Terraform Init
-        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform init -input=false"
+        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/src/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform init -input=false"
 
       - name: Terraform Plan
-        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform plan -input=false -out=${TERRAFORM_PLANFILE}"
+        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/src/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform plan -input=false"
