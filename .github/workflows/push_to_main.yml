@@ -1,0 +1,29 @@
+name: push_to_main
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  terraform_apply:
+    runs-on: ubuntu-20.04
+    env:
+      TERRAFORM_VERSION: v1.0.11
+      TF_IN_AUTOMATION: "yes"
+      TERRAFORM_PLANFILE: "out.tfplan"
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      BUILD_TOOLS_DOCKER_IMAGE: mineiros/build-tools:v0.14.1
+    steps:
+      - uses: actions/checkout@v2.4.0
+
+      - name: Terraform Init
+        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform init -input=false"
+
+      - name: Terraform Plan
+        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform plan -input=false -out=${TERRAFORM_PLANFILE}"
+
+      - name: Terraform Apply
+        run: docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e GITHUB_ORGANIZATION -e TERRAFORM_VERSION -e TF_IN_AUTOMATION -v terraform-working-directory:/terraform -v `pwd`:/build ${BUILD_TOOLS_DOCKER_IMAGE} sh -c "terraform apply -input=false -auto-approve ${TERRAFORM_PLANFILE}"
