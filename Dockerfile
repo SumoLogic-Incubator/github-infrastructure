@@ -1,6 +1,6 @@
 FROM hashicorp/terraform:1.0.11
 WORKDIR /work
-COPY src/* .
+COPY src/ .
 
 ARG AWS_ACCESS_KEY_ID
 ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
