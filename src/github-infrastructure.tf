@@ -6,3 +6,18 @@ resource "github_repository" "github_infrastructure" {
   has_projects  = false
   has_wiki      = false
 }
+
+variable "issue_labels" {
+  default = {
+    "custom-label"  = "533D99"
+    "documentation" = "FFB340"
+    "waiting-reply" = "CC6A14"
+  }
+}
+
+resource "github_issue_label" "github_infrastructure_labels" {
+  repository = "${github_repository.github_infrastructure.id}"
+  count      = "${length(var.issue_labels)}"
+  name       = "${element(keys(var.issue_labels), count.index)}"
+  color      = "${element(values(var.issue_labels), count.index)}"
+}
