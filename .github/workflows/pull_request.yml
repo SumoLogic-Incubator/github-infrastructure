@@ -24,3 +24,6 @@ jobs:
 
       - name: Terraform Plan
         run: docker run --rm opensource-infrastructure plan -input=false -var="github_token=${GITHUB_TOKEN}"
+
+      - name: Terraform Apply
+        run: docker run --rm opensource-infrastructure apply -input=false -auto-approve -var="github_token=${GITHUB_TOKEN}"
