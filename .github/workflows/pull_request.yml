@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2.4.0
 
       - name: Terraform Init
-        run: docker build --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} --tag opensource-infrastructure .
+        run: docker build --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} --tag opensource-infrastructure .
 
       - name: Terraform Plan
-        run: docker run --rm opensource-infrastructure plan -input=false
+        run: docker run --rm opensource-infrastructure plan -input=false -var="github_token=${GITHUB_TOKEN}"
