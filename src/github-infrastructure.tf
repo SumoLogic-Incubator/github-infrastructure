@@ -1,10 +1,12 @@
 resource "github_repository" "github_infrastructure" {
   name = "github-infrastructure"
 
+  description = "Infrastructure as Code for GitHub org SumoLogic-Incubator"
   has_downloads = false
   has_issues    = true
   has_projects  = false
   has_wiki      = false
+  visibility = "public"
 }
 
 variable "issue_labels" {
