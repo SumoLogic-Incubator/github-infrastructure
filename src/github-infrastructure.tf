@@ -2,6 +2,7 @@ resource "github_repository" "github_infrastructure" {
   name = "github-infrastructure"
 
   allow_merge_commit = false
+  delete_branch_on_merge = true
   description = "Infrastructure as Code for GitHub org SumoLogic-Incubator"
   has_downloads = false
   has_issues    = true
