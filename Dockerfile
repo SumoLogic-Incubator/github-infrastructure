@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:1.3.5
+FROM hashicorp/terraform:1.4.2
 WORKDIR /work
 COPY src/ .
 
